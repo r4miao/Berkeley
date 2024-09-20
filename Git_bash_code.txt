@@ -1,0 +1,5 @@
+git init
+git remote add origin https://github.com/r4miao/Berkeley.git 
+git add .
+git commit -m "Initial commit"
+git push origin master

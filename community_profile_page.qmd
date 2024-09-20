@@ -1,0 +1,113 @@
+---
+title: "Berkeley Community Profile"
+author: "Miao Li, PhD"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+format: 
+  html:
+    output-file: "index"
+    output-ext:  "html"    
+    self-contained: true
+    page-layout: full
+    toc: true
+    toc-location: left
+    grid: 
+      body-width: 2500px
+      sidebar-width: 300px
+      margin-width: 150px    
+editor: visual
+execute: 
+  echo: FALSE
+---
+
+# Community Profile
+
+# School Profile
+
+```{r}
+#| label: loaddata
+#| message: FALSE
+#| warning: FALSE
+library(readr)
+library(janitor)
+library(haven)
+library(readxl)
+library(tidyverse)
+library(ggplot2)
+select_sch <- read_csv("../Data/selected_sch.csv")
+```
+
+## Black Population Share and Poverty Rates by school
+
+```{r}
+#| echo: false
+poor <- select_sch %>% select(school_nm_x, pct_black, povertyindx) %>%  
+  pivot_longer(cols = c(pct_black, povertyindx), names_to = "Legend", values_to = "Score") %>% 
+  ggplot(aes(x = school_nm_x, y = Score, fill = Legend)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "School Population Profile", 
+       x = "", y = "Percentage", caption = "Data Source: SC School Report Cards") +
+  scale_fill_brewer(palette = "Pastel1",   
+                    labels = c("pct_black"  = "Black Population Share", 
+                               "povertyindx" = "Percent in Poverty")) +
+  theme_minimal()
+poor
+```
+
+## Elementary School Performance Indicators
+
+```{r}
+#| echo: false
+elem <- select_sch %>% select(school_nm_x, schooltypecd, e_pct_me, m_pct_me, sc_pct_me) %>% filter(is.na(schooltypecd)) %>% 
+  pivot_longer(cols = c(e_pct_me, m_pct_me, sc_pct_me), names_to = "Subject", values_to = "Score") %>% 
+  ggplot(aes(x = school_nm_x, y = Score, fill = Subject)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Percent Meets Expectations or Exceeding Expectations By Subject", 
+       x = "", y = "Percentage", caption = "Data Source: SC School Report Cards") +
+  scale_fill_brewer(palette = "Pastel1",   
+                    labels = c("e_pct_me" = "English", 
+                               "m_pct_me" = "Math", 
+                               "sc_pct_me" = "Science")) +
+  theme_minimal()
+elem
+```
+
+## High School Academic Performance Indicators
+
+```{r}
+#| echo: false
+hs <- select_sch %>% select(school_nm_x, schooltypecd, e_pct_abc, m_pct_abc, sc_pct_abc, h_pct_abc) %>% 
+  filter(schooltypecd=="H") %>% 
+  pivot_longer(cols = c(e_pct_abc, m_pct_abc, sc_pct_abc, h_pct_abc), names_to = "Subject", values_to = "Score") %>% 
+  ggplot(aes(x = school_nm_x, y = Score, fill = Subject)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Percent Scoring A, B or C By Subject", 
+       x = "", y = "Percentage", caption = "Data Source: SC School Report Cards") +
+  ylim(0,100) +
+    scale_fill_brewer(palette = "Pastel1",   
+                    labels = c("e_pct_abc" = "English", 
+                               "m_pct_abc" = "Math", 
+                               "sc_pct_abc" = "Science",
+                               "h_pct_abc" = "History")) +
+  theme_minimal()
+hs
+```
+
+## High School College/Workforce Readiness
+
+```{r}
+#| echo: false
+hs2 <- select_sch %>% select(school_nm_x, schooltypecd, pct_college, pct_career, pct_cte) %>% 
+  filter(schooltypecd=="H") %>% 
+  pivot_longer(cols = c(pct_college, pct_career, pct_cte), names_to = "Indicators", values_to = "Score") %>% 
+  ggplot(aes(x = school_nm_x, y = Score, fill = Indicators)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Graduate Cohort Performance", 
+       x = "", y = "Percentage", caption = "Data Source: SC School Report Cards") +
+  ylim(0,100) +
+  scale_fill_brewer(palette = "Pastel1",   
+                    labels = c("pct_college" = "College Ready", 
+                               "pct_career" = "Career Ready", 
+                               "pct_cte" = "Met Career Ready Threshhold \nFor CTE (Career and Tech Ed With Cert)")) +
+  theme_minimal()
+hs2
+```
