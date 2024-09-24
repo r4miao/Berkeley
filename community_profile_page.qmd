@@ -1,5 +1,5 @@
 ---
-title: "Berkeley Community Profile"
+title: "The Berkeley Highway SC-45 Corridor (BSC-45) Profile"
 author: "Miao Li, PhD"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 format: 
@@ -9,6 +9,7 @@ format:
     self-contained: true
     page-layout: full
     toc: true
+    toc_depth: 1
     toc-location: left
     grid: 
       body-width: 2500px
@@ -18,10 +19,6 @@ editor: visual
 execute: 
   echo: FALSE
 ---
-
-# Community Profile
-
-# School Profile
 
 ```{r}
 #| label: loaddata
@@ -33,13 +30,151 @@ library(haven)
 library(readxl)
 library(tidyverse)
 library(ggplot2)
-select_sch <- read_csv("../Data/selected_sch.csv")
+library(expss)
 ```
+
+
+&nbsp;  
+&nbsp; 
+&nbsp;  
+&nbsp; 
+
+
+# Community Profile
+
+
+![](hubs_target_area.png)
+
+## Demographics
+
+-   Over 20% of the population living in poverty and 48% are living under 150% of the federal poverty line
+-   More than 45% of the population is Black, and only 12% hold a college degree or higher.
+-   Among a total of 2000 housing units, close to half are mobile homes.
+
+## Health Indicators
+
+-   Higher than national average prevalence of current asthma: [above 11%](https://www.arcgis.com/apps/mapviewer/index.html?webmap=880892faa51d4a8d8e1252293f45b8dc).
+
+-   75% of the area are food desert: defined as more than 100 housing units do not have a vehicle and are more than ½ mile from the nearest supermarket, or a significant number or share of residents are more than 20 miles from the nearest supermarket.
+
+## Air Quality Indicators
+
+-   [Toxic Release to Air Facilities](https://experience.arcgis.com/experience/a0deb771dbcd40d0a46fbe83adc51747/)
+
+Facilities producing toxic release to air:
+
+-   Holcim Holly Hill Cement Plant (33.277380, -80.430135)
+-   CR Bard, Inc. (33.244219, -79.983345)
+-   SANTEE COOPER CROSS GENERATING STATION (33.369359, -80.113172)
+-   GIANT CEMENT CO (33.242778, -80.442222)
+-   DORCHESTER BIOMASS LLC (33.240095, -80.454695)
+-   ARGOS CEMENT LLC HARLEYVILLE CEMENT PLANT (33.226205, -80.452832)
+
+## Energy Use Indicators ( Data from LEAD Tool)
+
+-   Only 30% of housing units rely on electricity as the primary heating source.
+
+-   Significant energy burden, defined as the percentage of income spent on energy: Over 10% of household income is allocated to energy expenses.
+
+-   For low-income families, the energy burden can reach 20%, with a notable share (more than 20%) of these households relying on wood for heating.
+
+## Environmental Risk Rating (Data from the National Risk Index)
+
+-   Extreme heat: More than 80 days per year with temperatures above 90 degrees.
+-   Close to 60% of the area has wildfire risk rated above the 90th national percentile.
+-   High or very high National Risk Rating.
+-   High or very high Social Vulnerability Rating.
+-   Moderate to low Community Resilience Rating
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+mydf <- read_csv("../Data/NRI_Table_CensusTracts_SouthCarolina/NRI_Table_CensusTracts_SouthCarolina.csv")
+mydf <- janitor::clean_names(mydf)
+target_ct <- mydf %>% filter( tractfips %in% c("45015020202", "45015020101", 
+                                                  "45015020201", "45015020301",
+                                                  "45075010103", "45075010101",
+                                                  "45075010104", "45075010102",
+                                                  "45015020303", "45015020304")) %>% 
+                      select("county", "tractfips", "population", "area", matches("_ratng|spctl|riskr|afreq"))
+# Create function to convert character to numeric with labels
+convert_to_numeric_with_labels <- function(char_var) {
+  numeric_var <- as.numeric(factor(char_var, 
+                                   levels = c("Very Low", "Relatively Low", "Relatively Moderate", "Relatively High", "Very High")))
+  numeric_var <- set_val_lab(numeric_var, 
+                             c("Very Low" = 1, "Relatively Low" = 2, "Relatively Moderate" = 3, "Relatively High" = 4, "Very High" = 5))
+  return(numeric_var)
+}
+# Apply the function to all variables needing transformation
+variables_to_transform <- c("risk_ratng", "eal_ratng", "sovi_ratng", "resl_ratng", "ltng_riskr", "hrcn_riskr")
+target_ct[, variables_to_transform] <- lapply(target_ct[,variables_to_transform], convert_to_numeric_with_labels)
+target_ct %>% select(county, tractfips, risk_ratng, sovi_ratng, resl_ratng) %>% 
+  pivot_longer(cols=c(risk_ratng, sovi_ratng, resl_ratng), names_to = "Risks", values_to = "Rating") %>% 
+  ggplot(aes(x = as.character(tractfips), y = Rating, fill = Risks)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_y_continuous(breaks = 1:5, labels = c("Very Low", "Relatively Low", "Relatively Moderate", "Relatively High", "Very High")) +
+  labs(title = "Rating of Risk and Resilience", 
+       x = "Cencus Tract", y = "", caption = "Data Source: National Risk Index") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
+  scale_fill_brewer(palette = "Pastel1",   
+                    labels = c("risk_ratng" = "National Risk Rating", 
+                               "sovi_ratng" = "Social Vulnerability",
+                               "resl_ratng"= "Community Resilience")) 
+
+# Rated Hurricane Risk
+ggplot(target_ct, aes(x = as.character(tractfips), y = hrcn_riskr)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(breaks = 1:5, labels = c("Very Low", "Relatively Low", "Relatively Moderate", "Relatively High", "Very High")) +
+  labs(title = "Hurricane Risk Rating", x = "Census Tract", y = "") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))  
+
+# Lightening Risk
+ggplot(target_ct, aes(x = as.character(tractfips), y = ltng_riskr)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+    scale_y_continuous(breaks = 1:5, labels = c("Very Low", "Relatively Low", "Relatively Moderate", "Relatively High", "Very High")) +
+labs(title = "Lightening Risk Rating", x = "Census Tract", y = "") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))  
+
+
+# annualized frequency of lightening
+ggplot(target_ct, aes(x = as.character(tractfips), y = ltng_afreq)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(title = "Annualized Frequency of Lightening", x = "Census Tract", y = "Annualized Frequency") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))  
+
+paste("The Annulized Frequency of Lightening (average):", round(mean(target_ct$ltng_afreq),2), 
+      "; Range:", round(min(target_ct$ltng_afreq),2), 
+      round(max(target_ct$ltng_afreq),2))     # Average: 105 lightening per year
+
+
+```
+
+# School Profile
+
+![](schs_target_area.png)
+
+
+## There are six schools in this area.
+
+-   Cross High
+-   Cross Elementary
+-   J.K. Gourdin Elementary
+-   St. Stephen Elementary
+-   St. Stephen Middle
+-   Timberland High
 
 ## Black Population Share and Poverty Rates by school
 
 ```{r}
 #| echo: false
+#| message: FALSE
+#| warning: FALSE
+
+select_sch <- read_csv("../Data/selected_sch.csv")
 poor <- select_sch %>% select(school_nm_x, pct_black, povertyindx) %>%  
   pivot_longer(cols = c(pct_black, povertyindx), names_to = "Legend", values_to = "Score") %>% 
   ggplot(aes(x = school_nm_x, y = Score, fill = Legend)) +
@@ -49,7 +184,9 @@ poor <- select_sch %>% select(school_nm_x, pct_black, povertyindx) %>%
   scale_fill_brewer(palette = "Pastel1",   
                     labels = c("pct_black"  = "Black Population Share", 
                                "povertyindx" = "Percent in Poverty")) +
-  theme_minimal()
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))  
+
 poor
 ```
 
@@ -57,6 +194,8 @@ poor
 
 ```{r}
 #| echo: false
+#| message: FALSE
+#| warning: FALSE
 elem <- select_sch %>% select(school_nm_x, schooltypecd, e_pct_me, m_pct_me, sc_pct_me) %>% filter(is.na(schooltypecd)) %>% 
   pivot_longer(cols = c(e_pct_me, m_pct_me, sc_pct_me), names_to = "Subject", values_to = "Score") %>% 
   ggplot(aes(x = school_nm_x, y = Score, fill = Subject)) +
@@ -75,6 +214,8 @@ elem
 
 ```{r}
 #| echo: false
+#| message: FALSE
+#| warning: FALSE
 hs <- select_sch %>% select(school_nm_x, schooltypecd, e_pct_abc, m_pct_abc, sc_pct_abc, h_pct_abc) %>% 
   filter(schooltypecd=="H") %>% 
   pivot_longer(cols = c(e_pct_abc, m_pct_abc, sc_pct_abc, h_pct_abc), names_to = "Subject", values_to = "Score") %>% 
@@ -96,6 +237,8 @@ hs
 
 ```{r}
 #| echo: false
+#| message: FALSE
+#| warning: FALSE
 hs2 <- select_sch %>% select(school_nm_x, schooltypecd, pct_college, pct_career, pct_cte) %>% 
   filter(schooltypecd=="H") %>% 
   pivot_longer(cols = c(pct_college, pct_career, pct_cte), names_to = "Indicators", values_to = "Score") %>% 
