@@ -4,7 +4,7 @@ author: "Miao Li, PhD"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 format: 
   html:
-    output-file: "index"
+    output-file: "BSC45_Corridor"
     output-ext:  "html"    
     self-contained: true
     page-layout: full
