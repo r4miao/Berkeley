@@ -29,7 +29,9 @@ execute:
 
 The [Berkeley Lake Moultrie (BLM) Area](./Target_map.html) is a 635-square-mile region forming a ring around Lake Moultrie, located in the remote northwestern corner of Berkeley County, South Carolina. The area is bordered by another lake and the Santee River wetlands to the north, the Francis Marion National Forest to the east, swamps and woodlands to the west, and suburban communities of the Charleston metropolitan area to the south. Geographic constraints have concentrated human settlement, economic activities, and transportation within this ring around Lake Moultrie, making the highways encircling the lake the primary routes for daily commuting and emergency evacuations for the 40,000 residents. The natural barriers on three sides, combined with the lake at the center, have resulted in the region being predominantly rural and significantly underserved.
 
-Among the 26 census block groups in the area, half have been identified as disadvantaged communities by the EJScreen tool. The remaining block groups, which do not meet the disadvantaged designation, are skewed by the presence of small clusters of lake houses. Overall, approximately 40% of the local population lives in low-income households, and over 42% are African American. The area also has an aging population, with 20.6% of residents over the age of 64, and a high disability rate of 16.3%, placing it in the 60th percentile nationally. All 10 public schools in the area are Title I schools, serving a student population with an average pupil-in-poverty rate of 75%. The inadequate school system has imposed long-term constraints on workforce development. Among the three high schools, only 20% of students are considered college-ready and less than 40% are career-ready.
+Among the 26 census block groups in the area, half have been identified as disadvantaged communities by the EJScreen tool. The remaining block groups, which do not meet the disadvantaged designation, are skewed by the presence of small clusters of lake houses. [Communities](./Project_area_communities.html) in the area includes 3 towns: Moncks Corner (the county seat), St. Stephen, and Bonneau, and 6 unincorporated communities: Cross, Pineville, Alvin, Macedonia, Cordesville, and Poplar Hill.
+
+Overall, approximately 40% of the local population lives in low-income households, and over 42% are African American. The area also has an aging population, with 20.6% of residents over the age of 64, and a high disability rate of 16.3%, placing it in the 60th percentile nationally. All 10 public schools in the area are Title I schools, serving a student population with an average pupil-in-poverty rate of 75%. The inadequate school system has imposed long-term constraints on workforce development. Among the three high schools, only 20% of students are considered college-ready and less than 40% are career-ready.
 
 existing community facilities: three community centers, multiple food pantries, and multiple faith-based organizations orchestrated by Berkeley Resource Connection Center (BRCC) owned by Trident United Way, which has been playing a critical role in providing community services with long-established partnership with local organizations, including the Volunteer Organizations Active in Disaster (VOAD)
 
@@ -81,25 +83,22 @@ For the climate action strategy, we propose to creating community resilience hub
 
 By integrating these strategies, we aim to help the community effectively cope with the growing challenges of climate change and air pollution. The requested funding amount for each strategy and associated project was determined based on the scope of work, cost of technology and installation, and projected community benefits. To ensure the effectiveness of our approach, we will allocate 70% of the funding to climate action, 20% to pollution reduction efforts, and the remaining 10% to community engagement and collective action building. Our strategies will be guided by research-based methods and multidisciplinary approaches to ensure measurable improvements in resilience, environmental quality, and public health. Through a focus on community-specific needs and systematic evaluation, we aim to address the social and infrastructural barriers that contribute to disparities in energy security, health, and resilience. This project will not only enhance the community's ability to adapt to climate risks but also empower residents to take part in a sustainable future.
 
-
 #### 1.2.2 Climate Action Strategies (15 points)
 
-Our climate action strategy will focus on 
+Our climate action strategy will focus on
 
-1. Establish a network of community resilience hubs equipped with renewable energy sources and energy storage units that help build up climate resilience, food & water resilience, communication resilience, financial resilience, and health resilience.  
-2. Replace the outdated HVAC system for a high school  
-3. Initiate a workforce development strategy to bridge the three local high schools curriculum and training with local industries
-4. Perform weatherization and energy efficiency upgrade for 250 low income households in the area, and install solar panels for the residents for reduced energy burden and improved energy resilience.
-
+1.  Establish a network of community resilience hubs equipped with renewable energy sources and energy storage units that help build up climate resilience, food & water resilience, communication resilience, financial resilience, and health resilience.\
+2.  Replace the outdated HVAC system for a high school\
+3.  Initiate a workforce development strategy to bridge the three local high schools curriculum and training with local industries
+4.  Perform weatherization and energy efficiency upgrade for 250 low income households in the area, and install solar panels for the residents for reduced energy burden and improved energy resilience.
 
 #### 1.2.3 Pollution Reduction Strategies (15 points)
 
-Our pollution reduction strategy will focus on 
+Our pollution reduction strategy will focus on
 
-1. Install air purification systems for all public schools  
-2. Install air filtration systems for 250 households.
-3. Educational and public awareness promotion activities.
-
+1.  Install air purification systems for all public schools\
+2.  Install air filtration systems for 250 households.
+3.  Educational and public awareness promotion activities.
 
 ------------------------------------------------------------------------
 
