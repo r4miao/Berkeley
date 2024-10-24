@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Maps</title>
+    <style>
+        /* Remove all margins and padding from the body */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Ensure the body takes up the entire height */
+        }
+
+        /* Flexbox for side-by-side layout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            height: 100%; /* Make the container span the full height */
+        }
+
+        /* Set the first map smaller and the second one larger */
+        .map-small {
+            width: 30%;
+            height: 100%; /* Use the full height */
+            border: 0; /* Remove border */
+        }
+
+        .map-large {
+            width: 70%;
+            height: 100%; /* Use the full height */
+            border: 0; /* Remove border */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Leaflet Maps Side-by-Side, filling the screen -->
+<div class="container">
+    <!-- Embed the first map (smaller) -->
+    <iframe src="Scope_map.html" class="map-small"></iframe>
+
+    <!-- Embed the second map (larger) -->
+    <iframe src="Project_area_communities.html" class="map-large"></iframe>
+</div>
+
+</body>
+</html>
+
