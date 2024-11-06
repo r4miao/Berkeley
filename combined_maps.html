@@ -16,17 +16,25 @@
         /* Flexbox for side-by-side layout */
         .container {
             display: flex;
-            justify-content: space-between;
             height: 100%; /* Make the container span the full height */
         }
 
-        /* Set the first map smaller and the second one larger */
-        .map-small {
+        /* Left panel for two smaller maps */
+        .left-panel {
             width: 30%;
-            height: 100%; /* Use the full height */
+            height: 100%;
+            display: flex;
+            flex-direction: column; /* Stack smaller maps vertically */
+        }
+
+        /* Smaller map settings */
+        .map-small {
+            width: 100%; /* Make each map fill the width of the left panel */
+            height: 50%; /* Half the height for each smaller map */
             border: 0; /* Remove border */
         }
 
+        /* Right panel for the larger map */
         .map-large {
             width: 70%;
             height: 100%; /* Use the full height */
@@ -36,13 +44,16 @@
 </head>
 <body>
 
-<!-- Leaflet Maps Side-by-Side, filling the screen -->
+<!-- Container for both panels -->
 <div class="container">
-    <!-- Embed the first map (smaller) -->
-    <iframe src="Scope_map.html" class="map-small"></iframe>
+    <!-- Left panel with two smaller maps stacked vertically -->
+    <div class="left-panel">
+        <iframe src="Scope_map.html" class="map-small"></iframe>
+        <iframe src="Scope_map2.html" class="map-small"></iframe>
+    </div>
 
-    <!-- Embed the second map (larger) -->
-    <iframe src="Project_area_communities.html" class="map-large"></iframe>
+    <!-- Right panel with one large map -->
+    <iframe src="Target_map.html" class="map-large"></iframe>
 </div>
 
 </body>
